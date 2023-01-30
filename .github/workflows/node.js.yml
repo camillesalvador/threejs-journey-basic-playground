@@ -24,3 +24,5 @@ jobs:
         run: |
           npm install
           npm run build -- --base=/${{ github.event.repository.name }}/
+          cd dist
+          echo > .nojekyll
