@@ -10,13 +10,8 @@ on:
     branches: ['main']
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  example-job:
     steps:
-      - uses: actions/checkout@v3
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: cd dist
-      - run: echo > .no-jekyll
-      - run: npm test --if-present
+      - name: Run build script
+        run: ./deploy.sh
+        shell: bash
