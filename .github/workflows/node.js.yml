@@ -19,11 +19,10 @@ jobs:
           path: ~/node_modules
           key: cache-${{ hashFiles('**/package-lock.json') }}
 
-      # pass --base for application to work under GitHub pages
       - name: Install and build
         run: |
           npm install
-          npm run build -- --base=/${{ github.event.repository.name }}/
+          npm run build
           cd dist
           echo > .nojekyll
           git init
