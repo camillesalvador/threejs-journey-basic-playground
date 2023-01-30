@@ -69,6 +69,9 @@ const scene = new THREE.Scene();
  * Object
  */
 const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
+const group = new THREE.Group();
+group.rotation.x = 1.5;
+scene.add(group);
 
 const donutArray = [];
 
@@ -83,7 +86,8 @@ for (let i = 0; i < 100; i++) {
   const scale = Math.random();
   donut.scale.set(scale, scale, scale);
   donutArray.push(donut);
-  scene.add(donut);
+  // scene.add(donut);
+  group.add(donut);
 }
 
 /**
@@ -149,6 +153,8 @@ const tick = () => {
     donut.rotation.y = 1 * elapsedTime;
     donut.rotation.z = 1 * elapsedTime;
   }
+
+  group.rotation.y = 0.05 * elapsedTime;
 
   // Update controls
   controls.update();
