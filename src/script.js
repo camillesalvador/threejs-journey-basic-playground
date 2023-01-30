@@ -4,17 +4,35 @@ import * as dat from 'lil-gui';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
+const matCapsTextures = [
+  './textures/matcaps/1.png',
+  './textures/matcaps/2.png',
+  './textures/matcaps/3.png',
+  './textures/matcaps/4.png',
+  './textures/matcaps/5.png',
+  './textures/matcaps/6.png',
+  './textures/matcaps/7.png',
+  './textures/matcaps/8.png',
+];
+
+let currentMatCap = '8.png';
 /**
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
+const gui = new dat.GUI();
 
 /**
  * Fonts
  */
 const fontLoader = new FontLoader();
-const matcapTexture = textureLoader.load('./textures/matcaps/8.png');
+let matcapTexture = textureLoader.load('./textures/matcaps/8.png');
 const material = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
+
+gui.add(material, 'matcap', matCapsTextures).onChange((newMatCap) => {
+  matcapTexture = textureLoader.load(newMatCap);
+  material.matcap = matcapTexture;
+});
 
 fontLoader.load('./fonts/helvetiker_regular.typeface.json', (font) => {
   const textGeometry = new TextGeometry('more donuts', {
@@ -40,12 +58,6 @@ fontLoader.load('./fonts/helvetiker_regular.typeface.json', (font) => {
     -textGeometry.boundingBox.max.z * 0.5
   );
 });
-
-/**
- * Base
- */
-// Debug
-const gui = new dat.GUI();
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl');
