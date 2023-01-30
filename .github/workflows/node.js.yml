@@ -22,12 +22,4 @@ jobs:
       - name: Install and build
         run: |
           npm install
-          npm run build
-          cd dist
-          echo > .nojekyll
-          git init
-          git checkout -B main
-          git add -A
-          git commit -m 'deploy'
-          git push -f git@github.com:camillesalvador/threejs-journey-basic-playground.git main:gh-pages
-          cd -
+          npm run build -- --base=/${{ github.event.repository.name }}/
