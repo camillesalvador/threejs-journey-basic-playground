@@ -13,10 +13,10 @@ const textureLoader = new THREE.TextureLoader();
  * Fonts
  */
 const fontLoader = new FontLoader();
-const matcapTexture = textureLoader.load('/textures/matcaps/8.png');
+const matcapTexture = textureLoader.load('./textures/matcaps/8.png');
 const material = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
 
-fontLoader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
+fontLoader.load('./fonts/helvetiker_regular.typeface.json', (font) => {
   const textGeometry = new TextGeometry('more donuts', {
     font: font,
     size: 0.5,
