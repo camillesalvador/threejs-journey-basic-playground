@@ -16,8 +16,9 @@ const matCapsTextures = {
   'Texture 9': './textures/matcaps/9.png',
 };
 
-const currentMatCap = {
+const setupVars = {
   matcap: 'Texture 9',
+  text: 'bagel universe'
 }
 /**
  * Textures
@@ -32,13 +33,13 @@ const fontLoader = new FontLoader();
 let matcapTexture = textureLoader.load('./textures/matcaps/9.png');
 const material = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
 
-gui.add(currentMatCap, 'matcap', matCapsTextures).onChange((newMatCap) => {
+gui.add(setupVars, 'matcap', matCapsTextures).onChange((newMatCap) => {
   matcapTexture = textureLoader.load(newMatCap);
   material.matcap = matcapTexture;
 });
 
-fontLoader.load('./fonts/helvetiker_regular.typeface.json', (font) => {
-  const textGeometry = new TextGeometry('bagel universe', {
+function loadText(font) {
+  const textGeometry = new TextGeometry(setupVars.text, {
     font: font,
     size: 0.5,
     height: 0.2,
@@ -51,16 +52,26 @@ fontLoader.load('./fonts/helvetiker_regular.typeface.json', (font) => {
   });
   const text = new THREE.Mesh(textGeometry, material);
   scene.add(text);
-
+  
   textGeometry.computeBoundingBox();
-  console.log(textGeometry.boundingBox);
-
+  
   textGeometry.translate(
     -textGeometry.boundingBox.max.x * 0.5,
     -textGeometry.boundingBox.max.y * 0.5,
     -textGeometry.boundingBox.max.z * 0.5
   );
+  
+}
+
+fontLoader.load('./fonts/helvetiker_regular.typeface.json', (font) => {
+  loadText(font);
+
+  gui.add(setupVars, 'text').onChange(() => {
+    scene.remove(scene.children[2]);
+    loadText(font);
+  });
 });
+
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl');
