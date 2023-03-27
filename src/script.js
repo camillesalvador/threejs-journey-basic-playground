@@ -4,18 +4,21 @@ import * as dat from 'lil-gui';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
-const matCapsTextures = [
-  './textures/matcaps/1.png',
-  './textures/matcaps/2.png',
-  './textures/matcaps/3.png',
-  './textures/matcaps/4.png',
-  './textures/matcaps/5.png',
-  './textures/matcaps/6.png',
-  './textures/matcaps/7.png',
-  './textures/matcaps/8.png',
-];
+const matCapsTextures = {
+  'Texture 1': './textures/matcaps/1.png',
+  'Texture 2': './textures/matcaps/2.png',
+  'Texture 3': './textures/matcaps/3.png',
+  'Texture 4': './textures/matcaps/4.png',
+  'Texture 5': './textures/matcaps/5.png',
+  'Texture 6': './textures/matcaps/6.png',
+  'Texture 7': './textures/matcaps/7.png',
+  'Texture 8': './textures/matcaps/8.png',
+  'Texture 9': './textures/matcaps/9.png',
+};
 
-let currentMatCap = '8.png';
+const currentMatCap = {
+  matcap: 'Texture 9',
+}
 /**
  * Textures
  */
@@ -26,16 +29,16 @@ const gui = new dat.GUI();
  * Fonts
  */
 const fontLoader = new FontLoader();
-let matcapTexture = textureLoader.load('./textures/matcaps/8.png');
+let matcapTexture = textureLoader.load('./textures/matcaps/9.png');
 const material = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
 
-gui.add(material, 'matcap', matCapsTextures).onChange((newMatCap) => {
+gui.add(currentMatCap, 'matcap', matCapsTextures).onChange((newMatCap) => {
   matcapTexture = textureLoader.load(newMatCap);
   material.matcap = matcapTexture;
 });
 
 fontLoader.load('./fonts/helvetiker_regular.typeface.json', (font) => {
-  const textGeometry = new TextGeometry('more donuts', {
+  const textGeometry = new TextGeometry('bagel universe', {
     font: font,
     size: 0.5,
     height: 0.2,
